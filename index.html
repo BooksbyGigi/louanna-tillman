@@ -1,1 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Search Puzzles by Louanna Tillman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sage: #8B9E7D;
+            --cream: #FFF8F0;
+            --deep-plum: #5D4E6D;
+            --soft-coral: #E8B4A0;
+            --warm-gray: #4A4A4A;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--cream);
+            color: var(--warm-gray);
+            line-height: 1.7;
+        }
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--sage) 0%, var(--soft-coral) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(45deg, rgba(93, 78, 109, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(93, 78, 109, 0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(93, 78, 109, 0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(93, 78, 109, 0.05) 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Lora', serif;
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+            font-weight: 700;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.3rem, 3.5vw, 2rem);
+            color: white;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            font-weight: 400;
+            text-shadow: 1px 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--deep-plum);
+            color: white;
+            padding: 1.3rem 3.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(93, 78, 109, 0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(93, 78, 109, 0.5);
+            background: #4a3d5a;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 5%;
+        }
+
+        .section-title {
+            font-family: 'Lora', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--deep-plum);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--soft-coral);
+            margin: 1.5rem auto 0;
+            border-radius: 2px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(93, 78, 109, 0.12);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+
+        .book-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(93, 78, 109, 0.2);
+            border-color: var(--sage);
+        }
+
+        .book-cover-img {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            display: block;
+        }
+
+        .book-cover-placeholder {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: linear-gradient(135deg, var(--sage) 0%, var(--deep-plum) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-soon-label {
+            margin-top: 1rem;
+            font-family: 'Raleway', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-info {
+            padding: 2.5rem;
+        }
+
+        .book-card h3 {
+            font-family: 'Lora', serif;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--deep-plum);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .book-card p {
+            color: var(--warm-gray);
+            opacity: 0.85;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .amazon-btn {
+            display: block;
+            background: var(--deep-plum);
+            color: white;
+            text-align: center;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+        }
+
+        .amazon-btn:hover {
+            background: var(--soft-coral);
+            transform: translateX(5px);
+        }
+
+        .amazon-btn.disabled {
+            background: #ccc;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .about-section {
+            background: linear-gradient(135deg, rgba(139, 158, 125, 0.08) 0%, rgba(232, 180, 160, 0.08) 100%);
+            padding: 6rem 5%;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.3rem;
+            line-height: 2;
+            margin-bottom: 2rem;
+            color: var(--warm-gray);
+        }
+
+        .about-content p:last-child {
+            font-style: italic;
+            color: var(--deep-plum);
+            font-weight: 500;
+        }
+
+        .email-section {
+            background: var(--deep-plum);
+            color: white;
+            padding: 6rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .email-section::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: drift 60s linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+
+        .email-section .section-title {
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+
+        .email-section .section-title::after {
+            background: var(--soft-coral);
+        }
+
+        .email-form {
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .email-form p {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .form-group input {
+            flex: 1;
+            min-width: 280px;
+            padding: 1.4rem 2rem;
+            border: 3px solid rgba(255,255,255,0.25);
+            border-radius: 10px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.05rem;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder { color: rgba(255,255,255,0.6); }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--soft-coral);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .form-group button {
+            padding: 1.4rem 3.5rem;
+            background: var(--soft-coral);
+            color: var(--deep-plum);
+            border: none;
+            border-radius: 10px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-group button:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            background: var(--warm-gray);
+            color: var(--cream);
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        footer p { font-size: 1rem; opacity: 0.9; }
+
+        @media (max-width: 768px) {
+            .hero { min-height: 75vh; padding: 3rem 5%; }
+            .section { padding: 4rem 5%; }
+            .books-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .form-group { flex-direction: column; gap: 1.5rem; }
+            .form-group input, .form-group button { min-width: 100%; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Word Search Puzzles<br>by Louanna Tillman</h1>
+            <p class="subtitle">Faith-filled puzzles designed for relaxation, reflection, and creativity</p>
+            <a href="#books" class="hero-cta">Browse My Books</a>
+        </div>
+    </section>
+
+    <section class="section" id="books">
+        <h2 class="section-title fade-in">My Puzzle Collections</h2>
+        <div class="books-grid">
+
+            <!-- Book 1: Real cover image pulled from Amazon -->
+            <div class="book-card fade-in">
+                <img
+                    class="book-cover-img"
+                    src="https://m.media-amazon.com/images/I/71q3JhOVaHL._AC_UF1000,1000_QL80_.jpg"
+                    alt="Bible Verse Word Search Large Print book cover"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                >
+                <div class="book-cover-placeholder" style="display:none;">
+                    <span>✝️</span>
+                </div>
+                <div class="book-info">
+                    <h3>Bible Verse Word Search Large Print</h3>
+                    <p>Themed Word Puzzles featuring Inspirational Scripture Reflections. Perfect for Bible loving Seniors and Adults (75 Puzzles - 8.5" x 11")</p>
+                    <a href="https://www.amazon.com/dp/B0G2MRNDWN" class="amazon-btn" target="_blank">View on Amazon →</a>
+                </div>
+            </div>
+
+            <!-- Coming Soon Book 2 -->
+            <div class="book-card fade-in">
+                <div class="book-cover-placeholder">
+                    <span>🌸</span>
+                    <span class="coming-soon-label">Coming Soon</span>
+                </div>
+                <div class="book-info">
+                    <h3>Seasonal Word Search Collection</h3>
+                    <p>Beautiful seasonal puzzles celebrating the beauty of God's creation throughout the year.</p>
+                    <a href="#" class="amazon-btn disabled">Coming Soon</a>
+                </div>
+            </div>
+
+            <!-- Coming Soon Book 3 -->
+            <div class="book-card fade-in">
+                <div class="book-cover-placeholder">
+                    <span>🎨</span>
+                    <span class="coming-soon-label">Coming Soon</span>
+                </div>
+                <div class="book-info">
+                    <h3>Christian Coloring & Activity Book</h3>
+                    <p>Inspiring coloring pages and activities for reflection and creative expression.</p>
+                    <a href="#" class="amazon-btn disabled">Coming Soon</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="about-section fade-in">
+        <div class="about-content">
+            <h2 class="section-title">About Louanna</h2>
+            <p>Hi, I am Louanna Tillman and I create Bible verse word searches, Christian puzzles, seasonal word search books, journals, and coloring books designed for relaxation, reflection, and creativity for all ages.</p>
+            <p>My goal is to create high-quality activity books and journals that support faith, focus, creativity, and rest.</p>
+            <p>Thank you for being here—I hope my books bring encouragement, peace, and a little joy to your day.</p>
+        </div>
+    </section>
+
+    <section class="email-section">
+        <h2 class="section-title">Stay Updated</h2>
+        <div class="email-form">
+            <p>Be the first to know when new puzzle books are released! Join my email list for exclusive updates, new releases, and special offers.</p>
+            <form action="https://formspree.io/f/YOUR-FORM-ID" method="POST">
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </div>
+            </form>
+            <p style="font-size: 0.9rem; margin-top: 1.5rem; opacity: 0.7;">
+                Your email will never be shared. Unsubscribe anytime.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Louanna Tillman. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; font-size: 0.9rem;">Bringing faith, focus, and joy through puzzles</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+    </script>
+</body>
+</html>
