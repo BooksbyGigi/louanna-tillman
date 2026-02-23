@@ -14,11 +14,7 @@
             --warm-gray: #4A4A4A;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Raleway', sans-serif;
@@ -45,10 +41,10 @@
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image:
-                linear-gradient(45deg, rgba(93, 78, 109, 0.05) 25%, transparent 25%),
-                linear-gradient(-45deg, rgba(93, 78, 109, 0.05) 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, rgba(93, 78, 109, 0.05) 75%),
-                linear-gradient(-45deg, transparent 75%, rgba(93, 78, 109, 0.05) 75%);
+                linear-gradient(45deg, rgba(93,78,109,0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(93,78,109,0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(93,78,109,0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(93,78,109,0.05) 75%);
             background-size: 40px 40px;
             background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
             pointer-events: none;
@@ -95,15 +91,15 @@
             font-weight: 700;
             font-size: 1.15rem;
             border-radius: 50px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(93, 78, 109, 0.4);
+            transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 10px 30px rgba(93,78,109,0.4);
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
         .hero-cta:hover {
             transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 40px rgba(93, 78, 109, 0.5);
+            box-shadow: 0 15px 40px rgba(93,78,109,0.5);
             background: #4a3d5a;
         }
 
@@ -135,8 +131,8 @@
 
         .books-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
             margin-bottom: 4rem;
         }
 
@@ -144,57 +140,47 @@
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(93, 78, 109, 0.12);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(93,78,109,0.12);
+            transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
         }
 
         .book-card:hover {
             transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(93, 78, 109, 0.2);
+            box-shadow: 0 20px 50px rgba(93,78,109,0.2);
             border-color: var(--sage);
         }
 
-        .book-cover-img {
+        .book-cover-wrap {
             width: 100%;
             aspect-ratio: 3/4;
+            overflow: hidden;
+            background: #f0ebe6;
+        }
+
+        .book-cover-wrap img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.4s ease;
         }
 
-        .book-cover-placeholder {
-            width: 100%;
-            aspect-ratio: 3/4;
-            background: linear-gradient(135deg, var(--sage) 0%, var(--deep-plum) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .coming-soon-label {
-            margin-top: 1rem;
-            font-family: 'Raleway', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: rgba(255,255,255,0.8);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            position: relative;
-            z-index: 1;
-        }
+        .book-card:hover .book-cover-wrap img { transform: scale(1.04); }
 
         .book-info {
-            padding: 2.5rem;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .book-card h3 {
             font-family: 'Lora', serif;
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
+            font-size: 1.35rem;
+            margin-bottom: 0.75rem;
             color: var(--deep-plum);
             font-weight: 700;
             line-height: 1.3;
@@ -203,9 +189,10 @@
         .book-card p {
             color: var(--warm-gray);
             opacity: 0.85;
-            margin-bottom: 2rem;
-            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
             line-height: 1.7;
+            flex: 1;
         }
 
         .amazon-btn {
@@ -218,31 +205,18 @@
             border-radius: 8px;
             font-weight: 700;
             transition: all 0.3s ease;
-            font-size: 1.05rem;
+            font-size: 1rem;
             letter-spacing: 0.5px;
         }
 
-        .amazon-btn:hover {
-            background: var(--soft-coral);
-            transform: translateX(5px);
-        }
-
-        .amazon-btn.disabled {
-            background: #ccc;
-            cursor: default;
-            pointer-events: none;
-        }
+        .amazon-btn:hover { background: var(--soft-coral); transform: translateX(5px); color: white; }
 
         .about-section {
-            background: linear-gradient(135deg, rgba(139, 158, 125, 0.08) 0%, rgba(232, 180, 160, 0.08) 100%);
+            background: linear-gradient(135deg, rgba(139,158,125,0.08) 0%, rgba(232,180,160,0.08) 100%);
             padding: 6rem 5%;
         }
 
-        .about-content {
-            max-width: 900px;
-            margin: 0 auto;
-            text-align: center;
-        }
+        .about-content { max-width: 900px; margin: 0 auto; text-align: center; }
 
         .about-content p {
             font-size: 1.3rem;
@@ -251,11 +225,7 @@
             color: var(--warm-gray);
         }
 
-        .about-content p:last-child {
-            font-style: italic;
-            color: var(--deep-plum);
-            font-weight: 500;
-        }
+        .about-content p:last-child { font-style: italic; color: var(--deep-plum); font-weight: 500; }
 
         .email-section {
             background: var(--deep-plum);
@@ -277,40 +247,15 @@
         }
 
         @keyframes drift {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(30px, 30px); }
+            0% { transform: translate(0,0); }
+            100% { transform: translate(30px,30px); }
         }
 
-        .email-section .section-title {
-            color: white;
-            position: relative;
-            z-index: 10;
-        }
-
-        .email-section .section-title::after {
-            background: var(--soft-coral);
-        }
-
-        .email-form {
-            max-width: 650px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 10;
-        }
-
-        .email-form p {
-            font-size: 1.25rem;
-            margin-bottom: 3rem;
-            opacity: 0.95;
-            line-height: 1.8;
-        }
-
-        .form-group {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+        .email-section .section-title { color: white; position: relative; z-index: 10; }
+        .email-section .section-title::after { background: var(--soft-coral); }
+        .email-form { max-width: 650px; margin: 0 auto; position: relative; z-index: 10; }
+        .email-form p { font-size: 1.25rem; margin-bottom: 3rem; opacity: 0.95; line-height: 1.8; }
+        .form-group { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
 
         .form-group input {
             flex: 1;
@@ -326,12 +271,7 @@
         }
 
         .form-group input::placeholder { color: rgba(255,255,255,0.6); }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--soft-coral);
-            background: rgba(255,255,255,0.15);
-        }
+        .form-group input:focus { outline: none; border-color: var(--soft-coral); background: rgba(255,255,255,0.15); }
 
         .form-group button {
             padding: 1.4rem 3.5rem;
@@ -348,19 +288,9 @@
             text-transform: uppercase;
         }
 
-        .form-group button:hover {
-            background: white;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+        .form-group button:hover { background: white; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
-        footer {
-            background: var(--warm-gray);
-            color: var(--cream);
-            text-align: center;
-            padding: 3rem 5%;
-        }
-
+        footer { background: var(--warm-gray); color: var(--cream); text-align: center; padding: 3rem 5%; }
         footer p { font-size: 1rem; opacity: 0.9; }
 
         @media (max-width: 768px) {
@@ -371,16 +301,8 @@
             .form-group input, .form-group button { min-width: 100%; }
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 1s ease-out, transform 1s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -397,47 +319,75 @@
         <h2 class="section-title fade-in">My Puzzle Collections</h2>
         <div class="books-grid">
 
-            <!-- Book 1: Real cover image pulled from Amazon -->
+            <!-- Book 1: Bible Verse Word Search -->
             <div class="book-card fade-in">
-                <img
-                    class="book-cover-img"
-                    src="https://m.media-amazon.com/images/I/71q3JhOVaHL._AC_UF1000,1000_QL80_.jpg"
-                    alt="Bible Verse Word Search Large Print book cover"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                >
-                <div class="book-cover-placeholder" style="display:none;">
-                    <span>✝️</span>
+                <div class="book-cover-wrap">
+                    <img src="book1.jpg" alt="Bible Verse Word Search Large Print book cover">
                 </div>
                 <div class="book-info">
                     <h3>Bible Verse Word Search Large Print</h3>
-                    <p>Themed Word Puzzles featuring Inspirational Scripture Reflections. Perfect for Bible loving Seniors and Adults (75 Puzzles - 8.5" x 11")</p>
+                    <p>Themed Word Puzzles featuring Inspirational Scripture Reflections. Perfect for Bible loving Seniors and Adults. 75 Puzzles — 8.5" x 11"</p>
                     <a href="https://www.amazon.com/dp/B0G2MRNDWN" class="amazon-btn" target="_blank">View on Amazon →</a>
                 </div>
             </div>
 
-            <!-- Coming Soon Book 2 -->
+            <!-- Book 2: Foodies Kitchen -->
             <div class="book-card fade-in">
-                <div class="book-cover-placeholder">
-                    <span>🌸</span>
-                    <span class="coming-soon-label">Coming Soon</span>
+                <div class="book-cover-wrap">
+                    <img src="book2.jpg" alt="Foodies Kitchen Word Search book cover">
                 </div>
                 <div class="book-info">
-                    <h3>Seasonal Word Search Collection</h3>
-                    <p>Beautiful seasonal puzzles celebrating the beauty of God's creation throughout the year.</p>
-                    <a href="#" class="amazon-btn disabled">Coming Soon</a>
+                    <h3>Foodies Kitchen Word Search</h3>
+                    <p>A delicious collection of word search puzzles packed with culinary terms, cooking techniques, ingredients, and kitchen essentials for food lovers.</p>
+                    <a href="https://www.amazon.com/dp/B0GN3D68CY" class="amazon-btn" target="_blank">View on Amazon →</a>
                 </div>
             </div>
 
-            <!-- Coming Soon Book 3 -->
+            <!-- Book 3: Valentine's Day -->
             <div class="book-card fade-in">
-                <div class="book-cover-placeholder">
-                    <span>🎨</span>
-                    <span class="coming-soon-label">Coming Soon</span>
+                <div class="book-cover-wrap">
+                    <img src="book3.jpg" alt="Valentine's Day Word Search book cover">
                 </div>
                 <div class="book-info">
-                    <h3>Christian Coloring & Activity Book</h3>
-                    <p>Inspiring coloring pages and activities for reflection and creative expression.</p>
-                    <a href="#" class="amazon-btn disabled">Coming Soon</a>
+                    <h3>Valentine's Day Word Search</h3>
+                    <p>Heart-themed word search puzzles perfect for celebrating love and connection. A sweet and fun activity book for Valentine's Day and beyond.</p>
+                    <a href="https://www.amazon.com/dp/B0GFCYZHY1" class="amazon-btn" target="_blank">View on Amazon →</a>
+                </div>
+            </div>
+
+            <!-- Book 4: Literary Legends -->
+            <div class="book-card fade-in">
+                <div class="book-cover-wrap">
+                    <img src="book4.jpg" alt="Literary Legends Word Search book cover">
+                </div>
+                <div class="book-info">
+                    <h3>Literary Legends Word Search</h3>
+                    <p>A portable word search collection celebrating great authors, beloved books, and the world of literature. Perfect for book lovers on the go.</p>
+                    <a href="https://www.amazon.com/dp/B0GKXFL1XX" class="amazon-btn" target="_blank">View on Amazon →</a>
+                </div>
+            </div>
+
+            <!-- Book 5: Wine Wisdom -->
+            <div class="book-card fade-in">
+                <div class="book-cover-wrap">
+                    <img src="book5.jpg" alt="Wine Wisdom Word Search book cover">
+                </div>
+                <div class="book-info">
+                    <h3>Wine Wisdom Word Search</h3>
+                    <p>A relaxing word search experience for wine lovers — featuring varietals, regions, tasting notes, and everything that makes wine culture so enjoyable.</p>
+                    <a href="https://www.amazon.com/dp/B0GHHP5HM2" class="amazon-btn" target="_blank">View on Amazon →</a>
+                </div>
+            </div>
+
+            <!-- Book 6: Prayer Request Journal -->
+            <div class="book-card fade-in">
+                <div class="book-cover-wrap">
+                    <img src="book6.jpg" alt="Prayer Request Journal book cover">
+                </div>
+                <div class="book-info">
+                    <h3>Prayer Request Journal</h3>
+                    <p>A beautiful notebook designed to help you record, reflect on, and return to your prayers. Includes additional space for notes and Scripture.</p>
+                    <a href="https://www.amazon.com/dp/B0GBLH4SRS" class="amazon-btn" target="_blank">View on Amazon →</a>
                 </div>
             </div>
 
@@ -476,7 +426,7 @@
 
     <script>
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
